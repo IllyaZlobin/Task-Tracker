@@ -12,7 +12,16 @@ const handler = (err, req, res, next) => {
   res.status(err.status);
   res.json(response);
 };
-exports.handler = handler;
+
+exports.userFriendly = (err, req, res, next) => {
+  const error = new ApiError({
+    message: err.message,
+    stack: err.stack,
+    status: httpStatus.INTERNAL_SERVER_ERROR,
+  });
+  
+  return handler(error, req, res);
+};
 
 exports.notFound = (req, res, next) => {
   const error = new ApiError({
@@ -21,4 +30,15 @@ exports.notFound = (req, res, next) => {
   });
 
   return handler(error, req, res);
+};
+
+exports.validation = (err, req, res, next) => {
+  if (err && err.error && err.error.isJoi) {
+    res.status(400).json({
+      type: err.type,
+      message: err.error.toString(),
+    });
+  } else {
+    next(err);
+  }
 };

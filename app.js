@@ -3,11 +3,10 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const errorHandler = require('./middlewares/error');
+const errorHandler = require("./middlewares/error");
 const swagger = require("./middlewares/swagger.js");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const routes = require("./routes/index");
 
 var app = express();
 
@@ -20,21 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/api", cors(), routes);
 
 swagger.setup(app);
 
-// error handler
-app.use(function (err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  res.status(err.status || 500);
-});
-
 app.use(errorHandler.notFound);
+app.use(errorHandler.validation);
+app.use(errorHandler.userFriendly);
 
 const port = 3001;
 
