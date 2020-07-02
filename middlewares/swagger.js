@@ -14,7 +14,7 @@ function setup(app) {
         version: "1.0.0",
       },
     },
-    apis: ["./routes/*"], // Path to the API docs,
+    apis: ["./controllers/*"], // Path to the API docs,
   };
 
   const swaggerSpec = swaggerJSDoc(options);
