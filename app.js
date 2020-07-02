@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
+const errorHandler = require('./middlewares/error');
 const swagger = require("./middlewares/swagger.js");
 
 var indexRouter = require("./routes/index");
@@ -32,6 +33,8 @@ app.use(function (err, req, res, next) {
 
   res.status(err.status || 500);
 });
+
+app.use(errorHandler.notFound);
 
 const port = 3001;
 
