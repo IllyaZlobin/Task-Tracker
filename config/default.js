@@ -10,4 +10,6 @@ module.exports = {
       debug: false,
     },
   },
+  jwtSecret: 'TaskTrackerSecret12345',
+  jwtExpirationInterval: 30
 };
