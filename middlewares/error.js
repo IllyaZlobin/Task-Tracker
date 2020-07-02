@@ -12,16 +12,7 @@ const handler = (err, req, res, next) => {
   res.status(err.status);
   res.json(response);
 };
-
-exports.userFriendly = (err, req, res, next) => {
-  const error = new ApiError({
-    message: err.message,
-    stack: err.stack,
-    status: httpStatus.INTERNAL_SERVER_ERROR,
-  });
-  
-  return handler(error, req, res);
-};
+exports.handler = handler;
 
 exports.notFound = (req, res, next) => {
   const error = new ApiError({
