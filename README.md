@@ -1,6 +1,7 @@
 Please change configuration in file /config/default.js
-module.exports = {
-  db: {
+
+module.exports =  {
+   db: {
     default: {
       connectionLimit: 100,
       acquireTimeout: 20000,
@@ -16,3 +17,5 @@ module.exports = {
 };
 
 After that, use sql script "task-tracker.sql"
+
+Swagger - "localhost:3001/api-docs"
