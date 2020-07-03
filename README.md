@@ -17,3 +17,5 @@ module.exports =  {
 };
 
 After that, use sql script "task-tracker.sql"
+
+Swagger - "localhost:3001/api-docs"
