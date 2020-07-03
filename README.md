@@ -1,6 +1,7 @@
 Please change configuration in file /config/default.js
-module.exports = {
-  db: {
+
+module.exports =  {
+   db: {
     default: {
       connectionLimit: 100,
       acquireTimeout: 20000,
