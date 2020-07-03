@@ -13,12 +13,12 @@ const jwtOptions = {
 const jwtToken = async (payload, done) => {
   try {
     const { connection } = await dbAsync.getConnectionAsync();
-    const user = await dbAsync.queryAsync(
+    const [user] = await dbAsync.queryAsync(
       connection,
       `Select * from user where id=${payload.sub}`
     );
     
-    if (user) return done(null, user[0]);
+    if (user) return done(null, user);
     return done(null, false);
   } catch (e) {
     return done(e, false);
