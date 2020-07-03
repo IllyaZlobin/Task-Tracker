@@ -64,7 +64,7 @@ const checkEmail = async (email) => {
   try {
     const result = await dbAsync.queryAsync(connection, query);
     const [user] = result;
-    
+
     if (!_.isEmpty(user)) {
       throw new ApiError({
         message: "User with same email already is already exist",
@@ -121,6 +121,25 @@ exports.delete = async (id) => {
     return { status: "deleted" };
   } catch (err) {
     throw new ApiError(err);
+  } finally {
+    connection.release();
+    pool.end();
+  }
+};
+
+exports.list = async (page, limit) => {
+  const { connection, pool } = await dbAsync.getConnectionAsync();
+
+  const offset = (page - 1) * limit;
+
+  const getUsersQuery = `SELECT * FROM user
+                        LIMIT ${limit} OFFSET ${offset}`;
+
+  try {
+    const userList = await dbAsync.queryAsync(connection, getUsersQuery);
+    return userList;
+  } catch (err) {
+    throw new Error(err);
   } finally {
     connection.release();
     pool.end();

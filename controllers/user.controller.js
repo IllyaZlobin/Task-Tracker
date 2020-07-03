@@ -69,22 +69,12 @@ const userService = require("../services/user.service");
  *              schema:
  *                type: object
  */
-//TODO refactor!
 exports.list = async (req, res) => {
-  const { connection } = await dbAsync.getConnectionAsync();
   const { page, limit } = req.query;
-  const offset = (page - 1) * limit;
 
-  try {
-    const getUsersQuery = `SELECT * FROM user
-                          LIMIT ${limit} OFFSET ${offset}`;
+  const response = await userService.list(page, limit);
 
-    const userList = await dbAsync.queryAsync(connection, getUsersQuery);
-
-    res.status(200).send({ users: userList });
-  } catch (e) {
-    res.status(500).send(e.message);
-  }
+  return res.status(200).send({ users: response });
 };
 
 /**
