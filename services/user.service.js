@@ -12,13 +12,12 @@ exports.create = async (model) => {
                         VALUES ('${firstname}', '${lastname}', '${email}', ${age}, '${password}')`;
   const createdUserQuery = `SELECT * FROM user WHERE id=?`;
 
-  let result;
   let user;
   try {
     await checkEmail(email);
 
-    result = await dbAsync.queryAsync(connection, newUserQuery);
-    user = await dbAsync.queryAsync(connection, createdUserQuery, [
+    const result = await dbAsync.queryAsync(connection, newUserQuery);
+    [user] = await dbAsync.queryAsync(connection, createdUserQuery, [
       result.insertId,
     ]);
   } catch (err) {
@@ -28,7 +27,7 @@ exports.create = async (model) => {
     connection.release();
   }
 
-  return { user: user[0] };
+  return { user };
 };
 
 exports.getById = async (id) => {
@@ -37,8 +36,7 @@ exports.getById = async (id) => {
   const query = `SELECT * FROM user WHERE id=${id}`;
 
   try {
-    const result = await dbAsync.queryAsync(connection, query);
-    const [user] = result;
+    const [user] = await dbAsync.queryAsync(connection, query);
 
     if (_.isEmpty(user)) {
       throw new ApiError({
@@ -62,8 +60,7 @@ const checkEmail = async (email) => {
   const query = `SELECT * FROM user WHERE email LIKE('${email}')`;
 
   try {
-    const result = await dbAsync.queryAsync(connection, query);
-    const [user] = result;
+    const [user] = await dbAsync.queryAsync(connection, query);
 
     if (!_.isEmpty(user)) {
       throw new ApiError({
