@@ -19,7 +19,7 @@ exports.create = async (model) => {
 
   try {
     result = await dbAsync.queryAsync(connection, newTaskQuery);
-    task = await dbAsync.queryAsync(connection, createdTaskQuery, [
+    [task] = await dbAsync.queryAsync(connection, createdTaskQuery, [
       result.insertId,
     ]);
   } catch (err) {
@@ -29,7 +29,7 @@ exports.create = async (model) => {
     connection.release();
   }
 
-  return { task: task[0] };
+  return { task };
 };
 
 exports.update = async (model) => {
@@ -155,8 +155,7 @@ exports.getById = async (id) => {
   const query = `SELECT * FROM task WHERE id=${id}`;
 
   try {
-    const result = await dbAsync.queryAsync(connection, query);
-    const [task] = result;
+    const [task] = await dbAsync.queryAsync(connection, query);
 
     if (_.isEmpty(task)) {
       throw new ApiError({
