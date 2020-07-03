@@ -27,7 +27,7 @@ exports.findAndGenerateToken = async (options) => {
   let error;
 
   try {
-    user = await dbAsync.queryAsync(
+    [user] = await dbAsync.queryAsync(
       connection,
       `Select * from user where email LIKE('${email}') AND password LIKE('${password}')`
     );
@@ -38,7 +38,7 @@ exports.findAndGenerateToken = async (options) => {
     status: httpStatus.UNAUTHORIZED,
   };
   if (!_.isEmpty(user)) {
-    const accessToken = await this.generateToken(user[0].id);
+    const accessToken = await this.generateToken(user.id);
     return { user, accessToken };
   } else {
     error.message = "Incorrect email or password";
