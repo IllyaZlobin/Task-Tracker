@@ -1,4 +1,3 @@
-const dbAsync = require("../utils/dbAsync");
 const userService = require("../services/user.service");
 
 /**
