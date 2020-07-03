@@ -64,7 +64,7 @@ const checkEmail = async (email) => {
   try {
     const result = await dbAsync.queryAsync(connection, query);
     const [user] = result;
-    console.log(user);
+    
     if (!_.isEmpty(user)) {
       throw new ApiError({
         message: "User with same email already is already exist",
