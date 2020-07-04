@@ -27,3 +27,5 @@ Please change configuration in file /config/default.js
    After that, use sql script "task-tracker.sql"
 
    Swagger - "localhost:3001/api-docs"
+
+   Test - npm run test 
