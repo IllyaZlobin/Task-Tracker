@@ -110,7 +110,7 @@ exports.delete = async (id) => {
 
   await this.getById(id);
 
-  const query = `DELETE FROM user where id=${id}`;
+  const query = `DELETE FROM task where id=${id}`;
 
   try {
     await dbAsync.queryAsync(connection, query);
