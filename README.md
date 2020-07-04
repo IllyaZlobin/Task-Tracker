@@ -1,28 +1,28 @@
 Please change configuration in file /config/default.js
 
-module.exports =  {
+  module.exports =  {
    
-   db: {
+    db: {
 
-      default: {
+       default: {
 
-         connectionLimit: 100,
+          connectionLimit: 100,
+ 
+          acquireTimeout: 20000,
+ 
+          host: "localhost", <--- CHANGE
+ 
+          user: "root", <--- CHANGE
+ 
+          password: "1234", <--- CHANGE
+ 
+          database: "task-tracker",
+ 
+          debug: false,
 
-         acquireTimeout: 20000,
-
-         host: "localhost", <--- CHANGE
-
-         user: "root", <--- CHANGE
-
-         password: "1234", <--- CHANGE
-
-         database: "task-tracker",
-
-         debug: false,
-
-         },
-   }
-};
+          },
+      }
+    };
 
    After that, use sql script "task-tracker.sql"
 
